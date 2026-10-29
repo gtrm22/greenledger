@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<tittle>Green Ledger - Ledger Verifikasi Anti-Greenwashing</tittle>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=FrauncesLopsz,wght@9..144,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+    <a class="brand" href="#" id="brand">Green Ledger</a>
+    <nav id="topnav"></nav>
+</header>
+
+<main>
+<!-- 1. LANDING PAGE -->
+<section id="landing" class="view">
+    <div class="hero">
+        <div>
+            <h1>Ledger Verifikasi Anti-Greenwashing</h1>
+            <p class="lead">Periksa klaim keberlanjutan perusahaan terhadap bukti pendukungnya, lalu catat jurnalnya dengan benar. Tanpa bukti, klaim tidak ikut dibukukan.</p>
+            <button class="btn" data-go="auth">Mulai verifikasi</button>
+        <div>
+        <div class="sheet" aria-label="Contoh selisih klaim dan bukti">
+            <div class="row head"><span>Klaim</span><span>Bukti</span><span>Selisih</span></div>
+            <div class="row"><span>Listrik surya 50.000 kWh</span><span>48.200 kWh</span><span class="ok">3,7%</span></div>
+            "div class="row bad"><span>Bahan baku daur ulang 10.000 kg</span><span>6.100 kg</span><span>39%</span></div>
+            <div class="row warn"><span>Kredit karbon 120 ton CO_2 e</span><span>Tgl. 30 Des</span><span>Cut-off</span></div>
+            <div class="stamp">Greenwashing terdeteksi</div>
+        </div>
+    </div>
+    <div class="steps">
+        <article><h3>Catat klaim</h3><p>Masukkan klaim hijau beserta nilai dan periodenya.</p></article>
+        <article><h3>Unggah bukti</h3><p>Sertifikat, audit energi, transaksi pembelian, atau data karbon.</p></article>
+        <article><h3>Baca hasilnya</h3><p>Status verifikasi, catatan audit, saran jurnal, laporan, dan QR Code.</p></article>
+    </div>
+<section>
+
+<!-- 2. LOGIN / REGISTRASI -->
+<section id="auth" class="view hidden">
+    <div class="auth-box">
+        <div class="tabs" id="authTabs">
+            <button class="tab active" data-mode="login">Masuk</button>
+            <button class="tab" data-mode="register">Daftar</button>
+        </div>
+        <form id="authForm" autocomplete="on">
+            <label id="lblPerusahaan" class="hidden">Nama perusahaan / pribadi
+                <input id="fPerusahaan" type="text" placeholder="PT Contoh Sejahtera">
+            </label>
+            <label>Email
+                <input id="fEmail" type="email" required placeholder="nama@perusahaam.co.id">
+            </label>
+            <label>Kata sandi
+                <input id="fPass" type="password" required minlength="6" placeholder="Minimal 6 karakter">
+            </label>
+            <button class="btn" type="submit" id="authBtn">Masuk</button>
+            <p class="msg" id="authMsg"></p>
+        </form>
+    </div>
+</section>
+
+<!-- 3. DASHBOARD -->
+<section id="app" class="view hidden">
+    <div class="tabs main" id="appTabs">
+        <button class="tab active" data-tab="klaim"> Input klaim hijau</button>
+        <button class="tab" data-tab="bukti">Upload bukti</button>
+        <button class="tab" data-tab="hasil">Hasil verifikasi</button>
+    </div>
+
+    <div id="tab-klaim" class="panel">
+        <form id="klaimForm" class="grid">
+            <label class="span2">Nama klaim
+                <input id="kNama" required placeholder="Contoh: Pabrik 100% memakai energi surya">
+            </label>
+            <label>Kategori
+                <select id="kKategori"></select>
+            </label>
+            <label>Nilai klaim <small id="kSatuan"></small>
+                <input id="kNilai" type="number" min="0" step="any" required>
+            </label>
+            <label>Periode mulai <input id="kMulai" type="date" required></label>
+            <label>Periode akhir <input id="kAkhir" type="date" required></label>
+            <label>Biaya terkait (Rp) <input id="kBiaya" type="number" min="0" step="any" value="0"></label>
+            <label class="span2">Deskripsi
+                <textarea id="kDesk" rows="2" placeholder="Jelaskan klaim yang akan dipublikasikan"></textarea>
+            </label>
+            <div class="span2"><button class="btn" type="submit">Tambah klaim baru</button></div>
+        </form>
+        <div id="klaimList" class="list"></div>
+    </div>
+
+    <div id="tab-bukti" class="panel hidden">
+        <form id="buktiForm" class="grid">
+            <label class="span2">Klaim
+                <select id="bKlaim" required></select>
+            </label>
+            <label>Jenis bukti
+                <select id="bJenis"></select>
+            </label>
+            <label>Nilai pada bukti <small id="bSatuan"></small>
+                <input id="bNilai" type="number" min="0" step="any" placeholder="Kosongkan untuk sertifikat">
+            </label>
+            <label>Tanggal bukti <input id="bTanggal" type="date" required></label>
+            <label>Berkas <input id="bFile" type="file" required accept=".pdf,.png,.jpg,.xlsx,.csv,.docx"></label>
+            <div class="span2"><button class="btn" type="submit">Unggah bukti</button></div>
+        </form>
+        <div id="buktiList" class="list"></div>
+    </div>
+
+    <div id="tab-hasil" class="panel hidden">
+        <div id="hasilList" class="list"></div>
+    </div>
+</section>
+</main>
+
+<div id="toast" class="toast hidden"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
